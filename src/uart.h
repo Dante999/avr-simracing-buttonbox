@@ -1,3 +1,17 @@
+/*******************************************************************************
+ * 
+ * File    : uart.h
+ *
+ * Author  : Dante999
+ * Date    : 28.12.2018
+ * 
+ * Tabsize : 4
+ * License : GNU GPL v2
+ * 
+ * writes to the uart serial interface
+ *
+ * 
+ ******************************************************************************/
 #include <avr/io.h>
 
 #ifndef UART_H_

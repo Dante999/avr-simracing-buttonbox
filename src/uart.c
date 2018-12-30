@@ -1,4 +1,17 @@
-
+/*******************************************************************************
+ * 
+ * File    : uart.c
+ *
+ * Author  : Dante999
+ * Date    : 28.12.2018
+ * 
+ * Tabsize : 4
+ * License : GNU GPL v2
+ * 
+ * writes to the uart serial interface
+ *
+ * 
+ ******************************************************************************/
 #include "uart.h"
 #include <stdio.h>
 
@@ -8,18 +21,26 @@
 
 
 
-#define BAUD 9600UL      // Baudrate
+#define BAUD 9600UL      // Target Baudrate
 
-// Berechnungen
-#define UBRR_VAL    ((F_CPU+BAUD*8)/(BAUD*16)-1)    // clever runden
-#define BAUD_REAL   (F_CPU/(16*(UBRR_VAL+1)))       // Reale Baudrate
-#define BAUD_ERROR  ((BAUD_REAL*1000)/BAUD)         // Fehler in Promille, 1000 = kein Fehler.
+// Calculations (do not change)
+#define UBRR_VAL    ((F_CPU+BAUD*8)/(BAUD*16)-1)    // Value for the UBRR Register
+#define BAUD_REAL   (F_CPU/(16*(UBRR_VAL+1)))       // Real Baudrate
+#define BAUD_ERROR  ((BAUD_REAL*1000)/BAUD)         // Error Rate in promille, 1000 = 0K
 
 #if ((BAUD_ERROR<990) || (BAUD_ERROR>1010))
-    #error Systematischer Fehler der Baudrate grösser 1% und damit zu hoch! 
+    #error Rate of Baudrate Errors greater than 1%! Change system-clock or baudrate!
 #endif
 
 
+
+/*******************************************************************************
+ * @brief initializes the uart interface
+ * 
+ * @param  none
+ *
+ * @return none
+ ******************************************************************************/
 void uart_init() {
     UBRRH = UBRR_VAL >> 8;
     UBRRL = UBRR_VAL & 0xFF;
@@ -29,6 +50,13 @@ void uart_init() {
 }
 
 
+/*******************************************************************************
+ * @brief prints single char to the uart interface
+ * 
+ * @param  c     the char to print
+ *
+ * @return none
+ ******************************************************************************/
 void uart_putc(char c) {
 
     while (!(UCSRA & (1<<UDRE)))
@@ -39,6 +67,14 @@ void uart_putc(char c) {
     UDR = c;                                    // save character for sending
 }
 
+
+/*******************************************************************************
+ * @brief prints an 8-bit integer to the uart interface
+ * 
+ * @param  i     the integer to print
+ *
+ * @return none
+ ******************************************************************************/
 void uart_puti(uint8_t i) {
     
     char buffer[4];
@@ -46,24 +82,23 @@ void uart_puti(uint8_t i) {
     sprintf(buffer, "%d", i);
     
     uart_puts(buffer);
-    /*
-    
-    if(0 <= i && i <= 9) {
-        uart_putc((char) i+48);    
-    }
-    else {
-        uart_puts("#uart_puti_fail");
-    }
-    */
 }
 
+
+/*******************************************************************************
+ * @brief prints a string to the uart interface
+ * 
+ * @param  *s     pointer to the string which should be printed
+ *
+ * @return none
+ ******************************************************************************/
 void uart_puts(char *s) {
 
     while(*s != '\0') {
         uart_putc(*s);
         s++;
+        
     }
-
 }
 
 
