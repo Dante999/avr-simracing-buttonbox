@@ -86,7 +86,7 @@ void uart_puti(uint8_t i) {
 
 
 /*******************************************************************************
- * @brief prints a string to the uart interface
+ * @brief prints a string to the uart interface (without any newline)
  * 
  * @param  *s     pointer to the string which should be printed
  *
@@ -97,8 +97,20 @@ void uart_puts(char *s) {
     while(*s != '\0') {
         uart_putc(*s);
         s++;
-        
     }
+}
+
+
+/*******************************************************************************
+ * @brief prints a string to the uart interface (with a newline)
+ * 
+ * @param  *s     pointer to the string which should be printed
+ *
+ * @return none
+ ******************************************************************************/
+void uart_putsln(char *s) {
+    uart_puts(s);
+    uart_puts("\n");
 }
 
 

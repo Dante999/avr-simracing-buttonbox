@@ -28,7 +28,7 @@ enum FLIPSWITCH {
 };
 
 extern void flipswitch_init();
-extern uint8_t flipswitch_read(enum FLIPSWITCH flip_switch);
+extern int8_t flipswitch_is_flipped(enum FLIPSWITCH flip_switch);
 
 
 #endif

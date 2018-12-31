@@ -17,6 +17,7 @@
 
 #include <avr/io.h>
 #include "flipswitch.h"
+#include "util.h"
 
 // mapping of Flipswitch 1
 #define REG_DDR_SWITCH_1    DDRD
@@ -47,30 +48,6 @@
 #define REG_PORT_SWITCH_5   PORTB
 #define REG_PIN_SWITCH_5    PINB
 #define BIT_SWITCH_5        (1<<PB1)
-
-// static functions
-static uint8_t _is_bit_set(uint8_t byte, uint8_t bit_mask);
-
-
-/*******************************************************************************
- * @brief  checks if the masked bit is set in the given byte
- * 
- * @param  byte         the byte which should be checked
- * @param  bit_mask     the bit-mask 
- *
- * @return  0 -> the bit is not set
- *          1 -> the bit is set
- ******************************************************************************/
-uint8_t _is_bit_set(uint8_t byte, uint8_t bit_mask) {
-    
-    if( (byte & bit_mask) != 0) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-    
-}
 
 
 /*******************************************************************************
@@ -107,29 +84,30 @@ void flipswitch_init() {
  *         1 -> the switch is set to on
  *        -1 -> undefined flipswitch
  ******************************************************************************/
-uint8_t flipswitch_read(enum FLIPSWITCH flip_switch) {
-
+int8_t flipswitch_is_flipped(enum FLIPSWITCH flip_switch) {
 
    switch(flip_switch) {
 
        case FLIP_SWITCH_1:        
-            return _is_bit_set(REG_PIN_SWITCH_1, BIT_SWITCH_1);
+            return util_is_bit_set(REG_PIN_SWITCH_1, BIT_SWITCH_1);
             break;
         case FLIP_SWITCH_2:
-            return _is_bit_set(REG_PIN_SWITCH_2, BIT_SWITCH_2);
+            return util_is_bit_set(REG_PIN_SWITCH_2, BIT_SWITCH_2);
             break;
         case FLIP_SWITCH_3:
-            return _is_bit_set(REG_PIN_SWITCH_3, BIT_SWITCH_3);
+            return util_is_bit_set(REG_PIN_SWITCH_3, BIT_SWITCH_3);
             break;
         case FLIP_SWITCH_4:
-            return _is_bit_set(REG_PIN_SWITCH_4, BIT_SWITCH_4);
+            return util_is_bit_set(REG_PIN_SWITCH_4, BIT_SWITCH_4);
             break;
         case FLIP_SWITCH_5:
-            return _is_bit_set(REG_PIN_SWITCH_5, BIT_SWITCH_5);
+            return util_is_bit_set(REG_PIN_SWITCH_5, BIT_SWITCH_5);
+            break;
+        default:
+            return -1;
             break;
     }
-    
-    return -1;
+
 }
 
 

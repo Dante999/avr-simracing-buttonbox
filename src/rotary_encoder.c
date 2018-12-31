@@ -1,5 +1,7 @@
+#include "rotary_encoder.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "util.h"
 
 
 #define VAL_OCR     (F_CPU / 64.0 * 1e-3 - 0.5)
@@ -29,6 +31,7 @@ static int8_t calculate_delta( int8_t *last, uint8_t cw, uint8_t ccw );
 
 volatile int8_t m_enc_delta;                        // -128 ... 127
 static int8_t m_last;
+
 
 
 void encode_init() {
@@ -73,13 +76,33 @@ ISR( TIMER0_COMP_vect ) {
 }
 
 
-int8_t encode_switch(void) {
+int8_t encode_is_pressed(enum ROTARY_ENCODER rotary_encoder) {
 
-    if(ROTARY_1_SWITCH) {
-        return 1;
-    }
-    else {
-        return 0;
+    switch(rotary_encoder) {
+        
+        case ROTARY_ENCODER_1:
+            return util_is_zero(ROTARY_1_SWITCH);
+            break;
+        
+        case ROTARY_ENCODER_2:
+            return util_is_zero(ROTARY_2_SWITCH);
+            break;
+        
+        case ROTARY_ENCODER_3:
+            return util_is_zero(ROTARY_3_SWITCH);
+            break;
+        
+        case ROTARY_ENCODER_4:
+            return util_is_zero(ROTARY_4_SWITCH);
+            break;
+        
+        case ROTARY_ENCODER_5:
+            return util_is_zero(ROTARY_5_SWITCH);
+            break;
+        
+        default:
+            return -1;
+            break;
     }
 
 }

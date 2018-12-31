@@ -20,6 +20,7 @@ SOURCES  = main.c
 SOURCES += uart.c
 SOURCES += flipswitch.c
 SOURCES += rotary_encoder.c
+SOURCES += util.c
 #SOURCES += usbdrv/usbdrv.c 
 #SOURCES += usbdrv/usbdrvasm.S 
 #SOURCES += usbdrv/oddebug.c
@@ -50,7 +51,7 @@ all: clean hex eeprom flash_hex
 list_targets: 
 	avr-gcc --target-help
 
-hex: $(TARGET).hex size
+hex: clean $(TARGET).hex size
 
 eeprom: $(TARGET)_eeprom.hex
 

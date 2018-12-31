@@ -20,7 +20,7 @@ int main(void) {
 
     init();
 
-    uart_puts("Initializing done...\n");
+    uart_putsln("Initializing done...");
 
     
     sei();
