@@ -1,16 +1,16 @@
 /*******************************************************************************
- * 
+ *
  * File    : uart.h
  *
  * Author  : Dante999
  * Date    : 28.12.2018
- * 
+ *
  * Tabsize : 4
  * License : GNU GPL v2
- * 
+ *
  * writes to the uart serial interface
  *
- * 
+ *
  ******************************************************************************/
 #include <avr/io.h>
 
@@ -21,5 +21,6 @@
     extern void uart_putc(char c);
     extern void uart_puts(char *s);
     extern void uart_putsln(char *s);
-    extern void uart_puti(uint8_t i);
+    extern void uart_putui(uint8_t i);
+    extern void uart_puti(int8_t i);
 #endif

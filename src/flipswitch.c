@@ -17,7 +17,6 @@
 
 #include <avr/io.h>
 #include "flipswitch.h"
-#include "util.h"
 
 // mapping of Flipswitch 1
 #define REG_DDR_SWITCH_1    DDRD
@@ -86,26 +85,41 @@ void flipswitch_init() {
  ******************************************************************************/
 int8_t flipswitch_is_flipped(enum FLIPSWITCH flip_switch) {
 
+   uint8_t state = -1;
+   
    switch(flip_switch) {
 
        case FLIP_SWITCH_1:        
-            return util_is_bit_set(REG_PIN_SWITCH_1, BIT_SWITCH_1);
+            state = (REG_PIN_SWITCH_1 & BIT_SWITCH_1);
             break;
+            
         case FLIP_SWITCH_2:
-            return util_is_bit_set(REG_PIN_SWITCH_2, BIT_SWITCH_2);
+            state = (REG_PIN_SWITCH_2 & BIT_SWITCH_2);
             break;
+            
         case FLIP_SWITCH_3:
-            return util_is_bit_set(REG_PIN_SWITCH_3, BIT_SWITCH_3);
+            state = (REG_PIN_SWITCH_3 & BIT_SWITCH_3);
             break;
+            
         case FLIP_SWITCH_4:
-            return util_is_bit_set(REG_PIN_SWITCH_4, BIT_SWITCH_4);
+            state = (REG_PIN_SWITCH_4 & BIT_SWITCH_4);
             break;
+            
         case FLIP_SWITCH_5:
-            return util_is_bit_set(REG_PIN_SWITCH_5, BIT_SWITCH_5);
+            state = (REG_PIN_SWITCH_5 & BIT_SWITCH_5);
             break;
-        default:
+            
+        default: 
             return -1;
             break;
+
+    }
+    
+    if(state) {
+        return 0;
+    }
+    else {
+        return 1;
     }
 
 }

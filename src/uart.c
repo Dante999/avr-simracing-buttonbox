@@ -1,22 +1,22 @@
 /*******************************************************************************
- * 
+ *
  * File    : uart.c
  *
  * Author  : Dante999
  * Date    : 28.12.2018
- * 
+ *
  * Tabsize : 4
  * License : GNU GPL v2
- * 
+ *
  * writes to the uart serial interface
  *
- * 
+ *
  ******************************************************************************/
 #include "uart.h"
 #include <stdio.h>
 
 #ifndef F_CPU
-    #error F_CPU is not defined!! 
+    #error F_CPU is not defined!!
 #endif
 
 
@@ -36,7 +36,7 @@
 
 /*******************************************************************************
  * @brief initializes the uart interface
- * 
+ *
  * @param  none
  *
  * @return none
@@ -46,13 +46,13 @@ void uart_init() {
     UBRRL = UBRR_VAL & 0xFF;
 
     UCSRB |= (1<<TXEN);                         // enable UART TX
-    UCSRC = (1<<URSEL)|(1<<UCSZ1)|(1<<UCSZ0);   // Asynchron 8N1 
+    UCSRC = (1<<URSEL)|(1<<UCSZ1)|(1<<UCSZ0);   // Asynchron 8N1
 }
 
 
 /*******************************************************************************
  * @brief prints single char to the uart interface
- * 
+ *
  * @param  c     the char to print
  *
  * @return none
@@ -62,7 +62,7 @@ void uart_putc(char c) {
     while (!(UCSRA & (1<<UDRE)))
     {
         // waiting until sender is free...
-    }                             
+    }
 
     UDR = c;                                    // save character for sending
 }
@@ -70,24 +70,40 @@ void uart_putc(char c) {
 
 /*******************************************************************************
  * @brief prints an 8-bit integer to the uart interface
- * 
+ *
  * @param  i     the integer to print
  *
  * @return none
  ******************************************************************************/
-void uart_puti(uint8_t i) {
-    
+void uart_putui(uint8_t i) {
+
     char buffer[4];
-    
+
     sprintf(buffer, "%d", i);
-    
+
+    uart_puts(buffer);
+}
+
+/*******************************************************************************
+ * @brief prints an 8-bit integer to the uart interface
+ *
+ * @param  i     the integer to print
+ *
+ * @return none
+ ******************************************************************************/
+void uart_puti(int8_t i) {
+
+    char buffer[5];
+
+    sprintf(buffer, "%d", i);
+
     uart_puts(buffer);
 }
 
 
 /*******************************************************************************
  * @brief prints a string to the uart interface (without any newline)
- * 
+ *
  * @param  *s     pointer to the string which should be printed
  *
  * @return none
@@ -103,7 +119,7 @@ void uart_puts(char *s) {
 
 /*******************************************************************************
  * @brief prints a string to the uart interface (with a newline)
- * 
+ *
  * @param  *s     pointer to the string which should be printed
  *
  * @return none

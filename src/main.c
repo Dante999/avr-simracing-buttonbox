@@ -1,15 +1,17 @@
 
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include "flipswitch.h"
 #include "rotary_encoder.h"
 #include "uart.h"
-#include "flipswitch.h"
+#include "event_handler.h"
 
 
 
 
 
-void init() {
+
+static void init() {
     uart_init();
     flipswitch_init();
     encode_init();
@@ -19,14 +21,12 @@ void init() {
 int main(void) {
 
     init();
-
     uart_putsln("Initializing done...");
 
-    
     sei();
 
     while(1) {
-        //nothing to do
+        event_handler();
     }
 
 }

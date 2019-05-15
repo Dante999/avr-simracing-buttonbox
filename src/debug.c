@@ -16,18 +16,18 @@ void debug_flipswitch() {
     uart_puti(flipswitch_is_flipped(FLIP_SWITCH_3));
     uart_puti(flipswitch_is_flipped(FLIP_SWITCH_2));
     uart_puti(flipswitch_is_flipped(FLIP_SWITCH_1));
-    uart_putsln();
+    uart_putsln("");
 }
 
 
 void debug_rotary_switch() {
-        uart_putsln("Rotary Encoder (SW): ");
-        uart_puti(encode_is_pressed(ROTARY_ENCODER_5);
-        uart_puti(encode_is_pressed(ROTARY_ENCODER_4);
-        uart_puti(encode_is_pressed(ROTARY_ENCODER_3);
-        uart_puti(encode_is_pressed(ROTARY_ENCODER_2);
-        uart_puti(encode_is_pressed(ROTARY_ENCODER_1);
-        uart_putsln();
+    uart_putsln("Rotary Encoder (SW): ");
+    uart_puti(encode_is_pressed(ROTARY_ENCODER_5);
+    uart_puti(encode_is_pressed(ROTARY_ENCODER_4);
+    uart_puti(encode_is_pressed(ROTARY_ENCODER_3);
+    uart_puti(encode_is_pressed(ROTARY_ENCODER_2);
+    uart_puti(encode_is_pressed(ROTARY_ENCODER_1);
+    uart_putsln("");
 }
     
     

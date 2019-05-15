@@ -21,12 +21,14 @@ SOURCES += uart.c
 SOURCES += flipswitch.c
 SOURCES += rotary_encoder.c
 SOURCES += util.c
-#SOURCES += usbdrv/usbdrv.c 
-#SOURCES += usbdrv/usbdrvasm.S 
+SOURCES += event_handler.c
+#SOURCES += usbdrv/usbdrv.c
+#SOURCES += usbdrv/usbdrvasm.S
 #SOURCES += usbdrv/oddebug.c
 
 # Progammer
-PROGRAMMER=dragon_isp
+#PROGRAMMER=dragon_isp
+PROGRAMMER=usbasp
 #PORT=-P/dev/ttyS0
 #BAUD=-B115200
 
