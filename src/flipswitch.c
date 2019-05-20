@@ -57,7 +57,7 @@ struct Flipswitch {
     volatile uint8_t *pinx;
 };
 
-static Flipswitch g_flipswitches[FLIP_SWITCH_MAX];
+static struct Flipswitch g_flipswitches[FLIP_SWITCH_MAX];
 
 
 static void set_pinout() {
@@ -100,9 +100,9 @@ void flipswitch_init() {
 
     set_pinout();
 
-    for(uint8_t i; i<FLIP_SWITCH_MAX; i++) {
+    for(uint8_t i=0; i<FLIP_SWITCH_MAX; i++) {
         *g_flipswitches[i].ddrx &= ~(g_flipswitches[i].bit);
-        g_flipswitches[i].portx |=  (g_flipswitches[i].bit);
+        *g_flipswitches[i].portx |=  (g_flipswitches[i].bit);
     }
 
 //    REG_DDR_SWITCH_1   &= ~BIT_SWITCH_1;            // set pin as input
